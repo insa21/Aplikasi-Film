@@ -1,365 +1,433 @@
-   <?php
-  //Menggabungkan dengan file koneksi yang telah kita buat
-    include 'komponen/header.php';
-    ?>
+<html lang="id">
 
-      <?php if (isset($_GET['pesan'])) { ?>
-                           <?php if ($_GET['pesan'] == "berhasil") { 
-				echo "<script>";
-        echo 'setTimeout(function () { swal("Success!","Berhasil Menambahkan Data Film!","success");';
-        echo '}, 100);
-        </script>'; 
-        ?>
-                           <?php }elseif ($_GET['pesan'] == "gagal") { 
-        echo "<script>";
-        echo 'setTimeout(function () { swal("Error!","Gagal Menambahkan Data Film!","error");';
-        echo '}, 100);
-        </script>';
-        ?>
-                           <?php }elseif ($_GET['pesan'] == "ekstensi") {
-        echo "<script>";
-        echo 'setTimeout(function () { swal("Warning!","Ekstensi File Harus PNG Dan JPG!","warning");';
-        echo '}, 100);
-        </script>'; 
-        ?>
-                           <?php }elseif ($_GET['pesan'] == "size") { 
-        echo "<script>";
-        echo 'setTimeout(function () { swal("Warning!","	Size File Tidak Boleh Lebih Dari 2 MB!","warning");';
-        echo '}, 100);
-        </script>'; 
-        ?>
-            
-            <?php } ?>
-            <?php } ?>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Mulai pengembangan Anda dengan Dashboard untuk Bootstrap 4.">
+    <meta name="author" content="Creative Tim">
+    <title>InsaBuku | Nonton Gratis Tanpa Karcis</title>
+    <link rel="icon" href="backend/assets/img/brand/logo3.png" type="image/png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <link rel="stylesheet" href="backend/assets/vendor/nucleo/css/nucleo.css" type="text/css">
+    <link rel="stylesheet" href="backend/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+    <link rel="stylesheet" href="backend/assets/css/argon.css?v=1.1.0" type="text/css">
+    <link rel="stylesheet" href="backend/assets/vendor/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="backend/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="backend/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="backend/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+    <link rel="stylesheet" href="backend/assets/vendor/animate.css/animate.min.css">
+    <link rel="stylesheet" href="backend/assets/vendor/sweetalert2/dist/sweetalert2.min.css">
+</head>
 
-
-
-    <!-- Header -->
-    <div class="header bg-primary pb-6">
-      <div class="container-fluid">
-        <div class="header-body">
-          <div class="row align-items-center py-4">
-            <div class="col-lg-6 col-7">
-              <!-- <h6 class="h2 text-white d-inline-block mb-0">Default</h6> -->
-              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item"><a href="dashboard.php"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="dashboard.php">Dashboards</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Tambah Data Film</li>
-                </ol>
-              </nav>
-            </div>
-            <div class="col-lg-6 col-5 text-right">
-              <a href="#" class="btn btn-sm btn-neutral">New</a>
-              <a href="#" class="btn btn-sm btn-neutral">Filters</a>
-            </div>
-          </div>
-          <!-- Card stats -->
-          <div class="row">
-            <div class="col-xl-3 col-md-6">
-              <div class="card card-stats">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-   <!-- Page content -->
-   <div class="container-fluid mt--6">
-       <div class="row">
-           <div class="col">
-               <div class="card-wrapper">
-                   <!-- Custom form validation -->
-                   <div class="card">
-                       <div class="card-header">
-                    <h3 class="mb-0">Tambah Data Film</h3>
+<body>
+    <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+        <div class="scrollbar-inner">
+            <div class="sidenav-header d-flex align-items-center">
+                <a class="navbar-brand" href="#">
+                    <img src="backend/assets/img/brand/logo3.png" width="100%" height="100%" class="navbar-brand-img" alt="...">
+                </a>
+                <div class="ml-auto">
+                    <div class="sidenav-toggler d-none d-xl-block" data-action="sidenav-unpin" data-target="#sidenav-main">
+                        <div class="sidenav-toggler-inner">
+                            <i class="sidenav-toggler-line"></i>
+                            <i class="sidenav-toggler-line"></i>
+                            <i class="sidenav-toggler-line"></i>
+                        </div>
+                    </div>
                 </div>
-                           <!-- <h3>Tambah Film</h3> -->
-                     <!--   </div> -->
-                       <!-- Card body -->
-                       <div class="card-body">
-                           <div class="row">
-                               <div class="col-lg-8">
-                                   <!-- <p class="mb-0">
-                      For custom form validation messages, you’ll need to add the novalidate boolean attribute to your <code>&lt;form&gt;</code>. This disables the browser default feedback tooltips, but still provides access to the form
-                      validation APIs in JavaScript.
-                      <br /><br />
-                      When attempting to submit, you’ll see the<code>:invalid</code> and <code>:valid</code> styles applied to your form controls.
-                    </p> -->
-                               </div>
-                           </div>
-                           <!-- <hr /> -->
-                           <form action="insert_act.php" method="post" enctype="multipart/form-data">
-                               <div class="form-row">
-                                   <!-- Dropzone Image -->
-                                   <div class="col-md-4 mb-4">
-                                       <div class="card">
-                                           <div class="card-header">
-                                               <div class="form-input">
-                                                   <div class="preview">
-                                                       <img id="file-ip-1-preview">
-                                                   </div>
-                                                   <label for="file-ip-1">Upload Image</label>
-                                                   <input type="file" id="file-ip-1" accept="image/*" name="photo"
-                                                       onchange="showPreview(event);">
-                                               </div>
-                                           </div>
-                                       </div>
+            </div>
+            <div class="navbar-inner">
+                <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php">
+                                <i class="ni ni-shop text-primary"></i>
+                                <span class="nav-link-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="insert.php">
+                                <i class="ni ni-books text-orange"></i>
+                                <span class="nav-link-text">Tambah Buku</span>
+                            </a>
+                        </li>
 
-                                       <div class="col-md-12 mb-12">
+                        <li class="nav-item">
+                            <a class="nav-link" href="lihat_data.php">
+                                <i class="ni ni-bullet-list-67 text-info"></i>
+                                <span class="nav-link-text">Lihat Data Buku</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="calender.php">
+                                <i class="ni ni-calendar-grid-58 text-red"></i>
+                                <span class="nav-link-text">Calendar</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-                                           <label class="form-control-label" for="link"> Link :</label>
-                                           <input type="text" class="form-control" id="link" name="link"
-                                               placeholder="Enter Link" value="" required>
-                                       </div>
-                                   </div>
-                                   <div class="col-md-4 mb-4">
-                                       <label class="form-control-label" for="id"> ID :</label>
+    <!-- Main content -->
+    <div class="main-content" id="panel">
+        <!-- Topnav -->
+        <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Search form -->
+                    <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+                        <div class="form-group mb-0">
+                            <div class="input-group input-group-alternative input-group-merge">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                </div>
+                                <input class="form-control" placeholder="Search" type="text">
+                            </div>
+                        </div>
+                        <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </form>
+                    <!-- Navbar links -->
+                    <ul class="navbar-nav align-items-center ml-md-auto">
+                        <li class="nav-item d-xl-none">
+                            <!-- Sidenav toggler -->
+                            <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin" data-target="#sidenav-main">
+                                <div class="sidenav-toggler-inner">
+                                    <i class="sidenav-toggler-line"></i>
+                                    <i class="sidenav-toggler-line"></i>
+                                    <i class="sidenav-toggler-line"></i>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item d-sm-none">
+                            <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
+                                <i class="ni ni-zoom-split-in"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="ni ni-bell-55"></i>
+                            </a>
+                        </li>
 
-                                       <!-- Kode PHP Untuk ID Otomatis -->
+                    </ul>
+                    <ul class="navbar-nav align-items-center ml-auto ml-md-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="media align-items-center">
+                                    <span class="avatar avatar-sm rounded-circle">
+                                        <img alt="Image placeholder" src="../admin/backend/assets/img/theme/team-4.jpg">
+                                    </span>
+                                    <div class="media-body ml-2 d-none d-lg-block">
+                                        <span class="mb-0 text-sm  font-weight-bold">Admin</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="dropdown-header noti-title">
+                                    <h6 class="text-overflow m-0">Welcome!</h6>
+                                </div>
+                                <a href="#!" class="dropdown-item">
+                                    <i class="ni ni-single-02"></i>
+                                    <span>My profile</span>
+                                </a>
+                                <a href="#!" class="dropdown-item">
+                                    <i class="ni ni-settings-gear-65"></i>
+                                    <span>Settings</span>
+                                </a>
+                                <a href="#!" class="dropdown-item">
+                                    <i class="ni ni-calendar-grid-58"></i>
+                                    <span>Activity</span>
+                                </a>
+                                <a href="#!" class="dropdown-item">
+                                    <i class="ni ni-support-16"></i>
+                                    <span>Support</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#!" class="dropdown-item">
+                                    <i class="ni ni-user-run"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Header -->
 
-                                       <?php
-                      include 'koneksi.php';
-                      $query = mysqli_query($koneksi, "SELECT max(id_film) as kodeTerbesar FROM film");
-                      $data = mysqli_fetch_array($query);
-                      $kodeFilm = $data['kodeTerbesar'];
-                      // $no = 1;
-                      $urutan = (int) substr($kodeFilm, 3, 4) ;
-                      $urutan++;
-                      $huruf = "MVE";
-                      $kode = $huruf . sprintf("%04s", $urutan);
-                      
-                       ?>
+        <?php if (isset($_GET['pesan'])) { ?>
+            <?php if ($_GET['pesan'] == "berhasil") {
+                echo "<script>";
+                echo 'setTimeout(function () { swal("Success!","Berhasil Menambahkan Data Buku!","success");';
+                echo '}, 100);
+        </script>';
+            ?>
+            <?php } elseif ($_GET['pesan'] == "gagal") {
+                echo "<script>";
+                echo 'setTimeout(function () { swal("Error!","Gagal Menambahkan Data Buku!","error");';
+                echo '}, 100);
+        </script>';
+            ?>
+            <?php } elseif ($_GET['pesan'] == "ekstensi") {
+                echo "<script>";
+                echo 'setTimeout(function () { swal("Warning!","Ekstensi File Harus PNG Dan JPG!","warning");';
+                echo '}, 100);
+        </script>';
+            ?>
+            <?php } elseif ($_GET['pesan'] == "size") {
+                echo "<script>";
+                echo 'setTimeout(function () { swal("Warning!","	Size File Tidak Boleh Lebih Dari 2 MB!","warning");';
+                echo '}, 100);
+        </script>';
+            ?>
 
-                                       <!-- End ID Otomatis -->
-                                       <input type="text" class="form-control" id="id" name="id" placeholder="Enter Id"
-                                           value="<?php echo $kode; ?>" readonly>
-                                       <br>
-                                       <label class="form-control-label" for="name"> Movie Name :</label>
-                                       <input type="text" class="form-control" id="name" name="name"
-                                           placeholder="Enter movie name" value="" required>
-                                       <br>
-                                       <label class="form-control-label" for="production"> Production :</label>
-                                       <input type="text" class="form-control" id="production" name="production"
-                                           placeholder="Enter production" value="" required>
-                                       <br>
-                                       <div class="col-md-20 mb-12">
-                                           <label class="form-control-label" for="director"> Director :</label>
-                                           <input type="text" class="form-control" id="director" name="director"
-                                               placeholder="Enter Director" value="" required>
-                                       </div>
-                                   </div>
-                                   <div class="col-md-2 mb-3">
-                                       <label class="form-control-label" for="quality"> Quality : </label>
-                                       <select class="form-control" name="quality" id="quality">
-                                           <option value="">choose quality</option>
-                                           <option value="Blueray">Blueray</option>
-                                           <option value="Web-DL">Web-DL</option>
-                                           <option value="HD-Rip">HD-Rip</option>
-                                           <option value="DVD-Rip">DVD-Rip</option>
-                                           <option value="CAM/HDCAM">CAM/HDCAM</option>
-                                       </select>
-                                       <!-- <div class="valid-feedback">
-                        Good Job!
-                      </div>
-                          <div class="invalid-feedback">
-                           Please fill in this column!
-                      </div> -->
-                                       <br>
-                                       <label class="form-control-label" for="resulation"> Resulation : </label>
-                                       <select class="form-control" name="resulation" id="resulation">
-                                           <option value="">choose resolution</option>
-                                           <option value="720p">720p</option>
-                                           <option value="1080p">1080p</option>
-                                           <option value="1440p">1440p</option>
-                                           <option value="4K">4K</option>
-                                           <option value="8K">8K</option>
-                                       </select>
-                                       <br>
-                                       <label class="form-control-label" for="release"> Release :</label>
-                                       <input class="form-control datepicker" value="mm-dd-yyyy" id="release"
-                                           name="release" placeholder="Select date" required>
-                                       <br>
-                                       <label class="form-control-label" for="example-time-input"> Time :</label>
-                                       <input class="form-control" type="time" name="duration" value="00:00:00"
-                                           id="example-time-input">
-                                   </div>
-                                   <div class="col-md-2 mb-3">
-                                       <label class="form-control-label" for="imdb"> IMDB Rating :</label>
-                                       <input type="text" class="form-control" name="imdb" id="imdb"
-                                           placeholder="Enter IMDB" value="" required>
-                                       <br>
-                                       <label class="form-control-label" for="country"> Country :</label>
-                                       <input type="text" class="form-control" id="country" name="country"
-                                           placeholder="Enter country" value="" required>
-                                       <br>
-                                       <div class="card">
-                                           <div class="card-header">
-                                               <label class="form-control-label" for="gendre"> Gendre :</label>
-                                           </div>
-                                           <!-- Card body -->
-                                           <div class="card-body">
-                                               <div class="custom-control custom-checkbox">
-                                                   <input class="custom-control-input" id="animation" value="animation"
-                                                       name="gendre[]" type="checkbox">
-                                                   <label class="custom-control-label" for="animation">Animation</label>
-                                               </div>
-                                               <div class="custom-control custom-checkbox">
-                                                   <input class="custom-control-input" id="horor" value="horor"
-                                                       name="gendre[]" type="checkbox">
-                                                   <label class="custom-control-label" for="horor">Horor</label>
-                                               </div>
-                                               <div class="custom-control custom-checkbox">
-                                                   <input class="custom-control-input" id="romance" value="romance"
-                                                       name="gendre[]" type="checkbox">
-                                                   <label class="custom-control-label" for="romance">Romance</label>
-                                               </div>
-                                               <div class="custom-control custom-checkbox">
-                                                   <input class="custom-control-input" id="sci-fi" value="sci-fi"
-                                                       name="gendre[]" type="checkbox">
-                                                   <label class="custom-control-label" for="sci-fi">Sci-fi</label>
-                                               </div>
-                                               <div class="custom-control custom-checkbox">
-                                                   <input class="custom-control-input" id="adventure" value="adventure"
-                                                       name="gendre[]" type="checkbox">
-                                                   <label class="custom-control-label" for="adventure">Adventure</label>
-                                               </div>
-                                               <div class="custom-control custom-checkbox">
-                                                   <input class="custom-control-input" id="action" value="action"
-                                                       name="gendre[]" type="checkbox">
-                                                   <label class="custom-control-label" for="action">Action</label>
-                                               </div>
-                                           </div>
-                                       </div>
-                                   </div>
-                                   <div class="col-md-4 mb-4">
-                                       <div class="card">
-                                           <div class="card-header">
-                                               <label class="form-control-label" for="actors"> Actors :</label>
-                                           </div>
-                                           <!-- Card body -->
-                                           <div class="card-body">
-                                               <form>
-                                                   <input type="text" id="actors" class="form-control" name="actors" 
-                                                       value="" data-toggle="tags" required />
-                                               </form>
-                                           </div>
-                                       </div>
-                                   </div>
-                                   <div class="col-md-8 mb-8">
-                                       <div class="card">
-                                           <!-- Card header -->
-                                           <div class="card-header">
-                                               <label class="form-control-label" for="synopsis"> Synopsis :</label>
-                                           </div>
-
-                                           <!-- Card body -->
-                                           <div class="card-body">
-                                               <div class="form-group">
-                                                   <textarea class="form-control" name="synopsis" id="synopsis" rows="4" placeholder="Enter Synopsis" 
-                                                       required></textarea>
-                                               </div>
-
-                                           </div>
-
-                                       </div>
-                                   </div>
-                                   <div class="form-group">
-                                       <button class="btn btn-primary" name="submit" type="submit"> Submit form </button>
-                                   </div>
-
-                           </form>
-                       </div>
-                   </div>
-               </div>
-           </div>
-
-
-           <?php
-    include 'komponen/footer.php';
-    ?>
+            <?php } ?>
+        <?php } ?>
 
 
 
-           <style>
-           }
+        <!-- Header -->
+        <div class="header bg-primary pb-6">
+            <div class="container-fluid">
+                <div class="header-body">
+                    <div class="row align-items-cMasukan py-4">
+                        <div class="col-lg-6 col-7">
+                            <!-- <h6 class="h2 text-white d-inline-block mb-0">Default</h6> -->
+                            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                    <li class="breadcrumb-item"><a href="dashboard.php"><i class="fas fa-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="dashboard.php">Dashboards</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Tambah Data Buku</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                    <!-- Card stats -->
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card card-stats">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-           .form-input {
-               width: 350px;
-               padding: 20px;
-               background: #fff;
-               box-shadow: -3px -3px 7px rgba(94, 104, 121, 0.377),
-                   3px 3px 7px rgba(94, 104, 121, 0.377);
-           }
+        <!-- Page content -->
+        <div class="container-fluid mt--6">
+            <div class="row">
+                <div class="col">
+                    <div class="card-wrapper">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="mb-0">Tambah Data Buku</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                    </div>
+                                </div>
+                                <form action="insert_act.php" method="post" enctype="multipart/form-data">
+                                    <div class="form-row">
+                                        <div class="col-md-4 mb-4">
+                                            <div class="form-input">
+                                                <div class="preview">
+                                                    <img id="file-ip-1-preview">
+                                                </div>
+                                                <label for="file-ip-1">Upload Image</label>
+                                                <input type="file" id="file-ip-1" accept="image/*" name="photo" onchange="showPreview(event);">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <label class="form-control-label" for="isbn"> ISBN :</label>
+                                            <input type="text" class="form-control" id="isbn" name="isbn" placeholder="Masukan ISBN" value="" required>
+                                            <br>
+                                            <label class="form-control-label" for="judul"> Judul Buku</label>
+                                            <input type="text" class="form-control" id="judul" name="judul" placeholder="Judul Buku" value="" required>
+                                            <br>
+                                            <label class="form-control-label" for="penerbit"> Penerbit :</label>
+                                            <input type="text" class="form-control" id="penerbit" name="penerbit" placeholder="Masukan penerbit" value="" required>
+                                            <br>
+                                            <label class="form-control-label" for="bahasa"> Bahasa :</label>
+                                            <input type="text" class="form-control" id="bahasa" name="bahasa" placeholder="Masukan Bahasa" value="" required>
+                                            <br>
+                                            <label class="form-control-label" for="link"> Link :</label>
+                                            <input type="text" class="form-control" id="link" name="link" placeholder="Masukan Link" value="" required>
+                                        </div>
+                                        <div class="col-md-2 mb-3">
+                                            <label class="form-control-label" for="tanggal_terbit"> Tanggal Terbit :</label>
+                                            <input class="form-control datepicker" value="mm-dd-yyyy" id="tanggal_terbit" name="tanggal_terbit" placeholder="Select date" required>
+                                            <br>
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <label class="form-control-label" for="kategori"> Kategori :</label>
+                                                </div>
+                                                <div class="card-body">
+                                                    <?php
+                                                    $kategoriBuku = array("Sejarah", "Fiksi", "Sains", "Novel", "Komik", "Biografi", "Teknologi", "Pendidikan", "Kesehatan", "Lain-lain");
 
-           .form-input input {
-               display: none;
+                                                    foreach ($kategoriBuku as $kategori) {
+                                                    ?>
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" id="<?= strtolower($kategori) ?>" value="<?= strtolower($kategori) ?>" name="kategori" type="radio">
+                                                            <label class="custom-control-label" for="<?= strtolower($kategori) ?>"><?= $kategori ?></label>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 mb-3">
+                                            <label class="form-control-label" for="jumlah_halaman"> Jumlah Halaman :</label>
+                                            <input type="text" class="form-control" id="jumlah_halaman" name="jumlah_halaman" placeholder="Masukan Jumlah Halaman" value="" required>
+                                            <br>
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <label class="form-control-label" for="genre"> Genre :</label>
+                                                </div>
+                                                <div class="card-body">
+                                                    <?php
+                                                    $genreBuku = array("Fantasi", "Misteri", "Romansa", "Sains Fiksi", "Petualangan", "Aksi", "Horor", "Drama", "Thriller", "Komedi");
+
+                                                    foreach ($genreBuku as $genre) {
+                                                    ?>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input class="custom-control-input" id="<?= strtolower($genre) ?>" value="<?= strtolower($genre) ?>" name="genre[]" type="checkbox">
+                                                            <label class="custom-control-label" for="<?= strtolower($genre) ?>"><?= $genre ?></label>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <label class="form-control-label" for="penulis"> Penulis :</label>
+                                                </div>
+                                                <div class="card-body">
+                                                    <form>
+                                                        <input type="text" id="penulis" class="form-control" name="penulis" value="" data-toggle="tags" required />
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 mb-8">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <label class="form-control-label" for="synopsis"> Synopsis :</label>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" name="synopsis" id="synopsis" rows="4" placeholder="Masukan Synopsis" required></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" name="submit" type="submit">Submit form</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
-           }
+            <?php
+            // Include footer component
+            include 'komponen/footer.php';
+            ?>
 
-           .form-input label {
-               display: block;
-               width: 45%;
-               height: 45px;
-               margin-left: 25%;
-               line-height: 50px;
-               text-align: center;
-               background: #1172c2;
+            <style>
+                .form-input {
+                    width: 100%;
+                    /* Lebar formulir 100% dari lebar tata letak induk */
+                    max-width: 400px;
+                    /* Lebar maksimum formulir */
+                    margin: 0 auto;
+                    /* Pusatkan formulir di tengah */
+                    padding: 20px;
+                    background: #fff;
+                    box-shadow: -3px -3px 7px rgba(94, 104, 121, 0.377),
+                        3px 3px 7px rgba(94, 104, 121, 0.377);
+                }
 
-               color: #fff;
-               font-size: 15px;
-               font-family: "Open Sans", sans-serif;
-               text-transform: Uppercase;
-               font-weight: 600;
-               border-radius: 5px;
-               cursor: pointer;
-           }
+                .form-input input {
+                    display: none;
+                }
 
-           .form-input img {
-               width: 100%;
-               display: none;
+                .form-input label {
+                    display: block;
+                    width: 100%;
+                    /* Lebar label 100% dari lebar formulir */
+                    height: 45px;
+                    line-height: 45px;
+                    /* Sesuaikan line-height agar label dan input sejajar */
+                    text-align: center;
+                    background: #1172c2;
+                    color: #fff;
+                    font-size: 15px;
+                    font-family: "Open Sans", sans-serif;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
 
-               margin-bottom: 30px;
-           }
-           </style>
+                .form-input img {
+                    width: 100%;
+                    display: none;
+                    margin-bottom: 30px;
+                }
 
+                @media screen and (max-width: 600px) {
 
-
-           <!-- Optional JS -->
-           <script>
-           // Example starter JavaScript for disabling form submissions if there are invalid fields
-           (function() {
-               'use strict';
-               window.addEventListener('load', function() {
-                   // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                   var forms = document.getElementsByClassName('needs-validation');
-                   // Loop over them and prevent submission
-                   var validation = Array.prototype.filter.call(forms, function(form) {
-                       form.addEventListener('submit', function(event) {
-                           if (form.checkValidity() === false) {
-                               event.preventDefault();
-                               event.stopPropagation();
-                           }
-                           form.classList.add('was-validated');
-                       }, false);
-                   });
-               }, false);
-           })();
-           </script>
-
+                    /* Gaya CSS untuk layar dengan lebar maksimum 600px */
+                    .form-input label {
+                        width: 100%;
+                        /* Sesuaikan lebar label agar mencakup seluruh lebar */
+                        margin-left: 0;
+                        /* Reset margin-left */
+                    }
+                }
+            </style>
 
 
+            <!-- Optional JS -->
+            <script>
+                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                (function() {
+                    'use strict';
+                    window.addEventListener('load', function() {
+                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                        var forms = document.getElementsByClassName('needs-validation');
+                        // Loop over them and prevent submission
+                        var validation = Array.prototype.filter.call(forms, function(form) {
+                            form.addEventListener('submit', function(event) {
+                                if (form.checkValidity() === false) {
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                }
+                                form.classList.add('was-validated');
+                            }, false);
+                        });
+                    }, false);
+                })();
+            </script>
 
-
-           <script type="text/javascript">
-           function showPreview(event) {
-               if (event.target.files.length > 0) {
-                   var src = URL.createObjectURL(event.target.files[0]);
-                   var preview = document.getElementById("file-ip-1-preview");
-                   preview.src = src;
-                   preview.style.display = "block";
-               }
-           }
-           </script>
+            <script type="text/javascript">
+                // Function to show image preview
+                function showPreview(event) {
+                    if (event.target.files.length > 0) {
+                        var src = URL.createObjectURL(event.target.files[0]);
+                        var preview = document.getElementById("file-ip-1-preview");
+                        preview.src = src;
+                        preview.style.display = "block";
+                    }
+                }
+            </script>

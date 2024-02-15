@@ -26,6 +26,9 @@ SET time_zone = "+00:00";
 --
 -- Struktur dari tabel `calender`
 --
+CREATE DATABASE insafilm
+
+use insafilm
 
 CREATE TABLE `calender` (
   `id_calender` varchar(11) NOT NULL,
